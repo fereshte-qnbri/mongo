@@ -1,0 +1,21 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const facultyRoutes = require('./routes/facultyRoutes');
+
+const app = express();
+const PORT = 3000; 
+app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost:27017/facultyDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('Could not connect to MongoDB', err));
+
+app.use('/member', facultyRoutes);
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
